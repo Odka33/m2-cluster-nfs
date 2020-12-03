@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include cluster-linux"
+      include_role:
+        name: "cluster-linux"
+
+- name: Setup
+  hosts: all
+  roles:
+    - setup

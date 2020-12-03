@@ -1,0 +1,23 @@
+---
+driver:
+  name: delegated
+  options:
+    managed: False
+    login_cmd_template: 'docker exec -it {instance} bash'
+    ansible_connection_options:
+      ansible_connection: docker
+platforms:
+  - name: storage1
+  - name: clusternode1
+  - name: clusternode2
+  - name: client
+provisioner:
+  name: ansible
+  options:
+    vvv: True
+  log: True
+  inventory:
+    links:
+      hosts: hosts
+verifier:
+  name: ansible

@@ -1,0 +1,77 @@
+version: '3.2'
+
+services:
+  storage1:
+    build:
+      context: .
+      dockerfile: Dockerfile-storage1
+    hostname: storage1
+    container_name: storage1
+    extra_hosts:
+      - "storage1.example.com:10.0.2.15"
+    restart: "no"
+    privileged: true
+    networks:
+      cluster-network:
+        ipv4_address: 10.0.2.15
+    volumes:
+      - storage1:/var/lib/storage1/data
+      - storage2:/var/lib/storage2/data
+  clusternode1:
+    build:
+      context: .
+      dockerfile: Dockerfile-clusternode1
+    hostname: nfs1
+    container_name: clusternode1
+    extra_hosts:
+      - "nfs1.example.com:10.0.2.20"
+    restart: "no"
+    privileged: true
+    networks:
+      cluster-network:
+        ipv4_address: 10.0.2.20
+    volumes:
+      - clusternode1:/var/lib/clusternode1/data
+  clusternode2:
+    build:
+      context: .
+      dockerfile: Dockerfile-clusternode2
+    hostname: nfs2
+    container_name: clusternode2
+    extra_hosts:
+      - "nfs2.example.com:10.0.2.21"
+    restart: "no"
+    privileged: true
+    networks:
+      cluster-network:
+        ipv4_address: 10.0.2.21
+    volumes:
+      - clusternode2:/var/lib/clusternode2/data
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    hostname: client
+    container_name: client
+    extra_hosts:
+      - "nfs2.example.com:10.0.2.25"
+    restart: "no"
+    privileged: true
+    networks:
+      cluster-network:
+        ipv4_address: 10.0.2.25
+    volumes:
+      - client:/var/lib/client/data
+networks:
+  cluster-network:
+    ipam:
+      driver: default
+      config: 
+        - subnet: 10.0.2.10/24 
+
+volumes:
+  storage1:
+  storage2:
+  clusternode1:
+  clusternode2:
+  client:
