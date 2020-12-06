@@ -16,7 +16,6 @@ services:
         ipv4_address: 10.0.2.15
     volumes:
       - storage1:/var/lib/storage1/data
-      - storage2:/var/lib/storage2/data
   clusternode1:
     build:
       context: .

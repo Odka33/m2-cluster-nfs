@@ -1,12 +1,47 @@
-Role Name
-=========
+# Cluster Linux
+===============
 
-A brief description of the role goes here.
+Travaux pratique autour du déploiement d'un cluster sous linux et de l'ajout de fonctionnalité de stockage NFS, iSCSI.
 
-Requirements
-------------
+Prérequis
+---------
+Il est possible d'effectuer le TP de manière différente.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+#### Docker :
+
+Utilisation d'un socle logiciel Molecule (pour les tests de roles ansible), Ansible (pour le provisonnement et automatisation) et Docker (pour les conteneurs).
+
+Le déploiement des machines se fait via un script : 
+
+````
+// Donner les droits d'execution au script suivant 
+chmod + x create.sh destroy.sh
+
+// Création des conteneurs
+./create.sh
+...
+Creating clusternode1 ... done
+Creating storage1     ... done
+Creating clusternode2 ... done
+Creating client       ... done
+
+
+````
+> Durant le TP il est possible que des erreurs vous empêches d'avancer. Dans ce cas effectuer "./destroy.sh" qui aura pour effet de stopper et détuire conteneurs, images.
+>> La méthode Docker posséde quelque désavantage par rapport à la virtualisation. Il n'est pas possible de gérer les disques. Nous allons alors utiliser LVM.
+
+##### LVM :
+
+Installation des paquets LVM :
+
+````
+yum -y install lvm2
+````
+
+
+ou
+
+Vagrant + virtualbox 
 
 Role Variables
 --------------
